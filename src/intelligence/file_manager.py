@@ -1,4 +1,5 @@
-from src.app_dic import get_path
+from datetime import datetime
+from src.app_dic import get_path, append_queue
 
 class File_manager():
     def __init__(self, app, path):
@@ -6,9 +7,13 @@ class File_manager():
         self.path_to_read = path
 
     def write_to_distant(self, content):
-        f = open(get_path(self.app))
+        dateTimeObj = datetime.now()
+        timestampStr = dateTimeObj.strftime("%d-%b-%Y-%H-%M-%S-%f)")
+        path_dest = get_path(self.app) + "_" + timestampStr
+        f = open(path_dest)
         f.write(content)
         f.close()
+        append_queue(self.app, path_dest)
         return False
 
     def write(self):
